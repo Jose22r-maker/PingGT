@@ -5,3 +5,173 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
+
+/* Ocultar barra blanca de bajar y subir (scrollbars) de forma global */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+* {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Optimización táctil y de legibilidad para pantallas extremadamente pequeñas (< 350px) */
+@media (max-width: 350px) {
+  /* Contenedores y espaciados generales */
+  main {
+    padding: 0.35rem !important;
+    gap: 0.4rem !important;
+  }
+
+  /* Encabezado Principal */
+  header .max-w-4xl {
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  header h1 {
+    font-size: 11px !important;
+  }
+
+  /* Botones de navegación con mejores áreas táctiles */
+  nav button {
+    padding: 0.45rem 0.35rem !important;
+    font-size: 9.5px !important;
+    min-height: 38px !important;
+    border-radius: 6px !important;
+  }
+
+  /* Bienvenida y banners */
+  #home-view-container h2 {
+    font-size: 14px !important;
+  }
+
+  #home-view-container p {
+    font-size: 10px !important;
+  }
+
+  /* Carruseles y tarjetas destacados */
+  #home-featured-chats-section {
+    padding: 0.65rem !important;
+  }
+
+  #home-featured-chats-section h3 {
+    font-size: 11px !important;
+  }
+
+  #home-featured-chats-section button {
+    width: 125px !important;
+    padding: 0.5rem !important;
+  }
+
+  /* Acciones de Inicio */
+  #home-actions-grid {
+    gap: 0.4rem !important;
+  }
+
+  #home-actions-grid button {
+    height: 48px !important;
+    padding: 0.4rem !important;
+  }
+
+  /* Listas de contactos y chat */
+  #chats-scroller button {
+    padding: 0.45rem !important;
+    min-height: 50px !important;
+  }
+
+  #chat-list-widget input {
+    font-size: 10.5px !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+
+  /* Conversación del chat */
+  #conversation-pane {
+    height: 380px !important;
+  }
+
+  #conversation-scroller {
+    padding: 0.45rem !important;
+  }
+
+  #conversation-scroller p {
+    font-size: 10.5px !important;
+  }
+
+  #message-typing-input {
+    padding: 0.45rem !important;
+    font-size: 11px !important;
+  }
+
+  #message-send-btn {
+    padding: 0.5rem !important;
+    min-height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  /* Configuración del perfil */
+  #profile-container {
+    padding: 0.5rem !important;
+  }
+
+  #profile-container input {
+    font-size: 11px !important;
+    padding: 0.4rem !important;
+  }
+
+  #profile-container .grid {
+    gap: 0.5rem !important;
+  }
+
+  /* Botones principales de acción con excelente área táctil */
+  #manual-add-submit-btn,
+  #regenerate-qr-btn,
+  #copy-id-btn,
+  #profile-name-save-btn {
+    min-height: 44px !important;
+    font-size: 11px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Tabs de Escaneo */
+  #tab-scanner-camera,
+  #tab-scanner-upload,
+  #tab-scanner-manual {
+    font-size: 10px !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    min-height: 38px !important;
+  }
+
+  /* Áreas de arrastre y contenedores generales de video */
+  .h-44, .h-60 {
+    height: 125px !important;
+  }
+
+  /* Ajustes de Configuración */
+  #settings-view-wrapper h3 {
+    font-size: 11px !important;
+  }
+  #settings-view-wrapper p {
+    font-size: 10px !important;
+  }
+  #settings-view-wrapper select,
+  #settings-view-wrapper input,
+  #settings-view-wrapper textarea {
+    font-size: 10.5px !important;
+    padding: 0.4rem !important;
+  }
+  #settings-view-wrapper button {
+    min-height: 38px !important;
+    font-size: 10px !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+}

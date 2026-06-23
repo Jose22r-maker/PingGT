@@ -246,26 +246,6 @@ export default function HomeView({
         </button>
       </div>
 
-      {/* Qué hace diferente a PingGT */}
-      <div className="bg-white border border-slate-200 rounded-xl p-3.5 sm:p-5 space-y-2 sm:space-y-3" id="home-why-ping">
-        <h4 className="font-sans font-bold text-slate-800 text-xs flex items-center gap-1.5">
-          <Shield className="w-4.5 h-4.5 text-teal-600" /> Filosofía de PingGT
-        </h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-[11px] sm:text-xs font-sans text-slate-600 leading-relaxed">
-          <div className="space-y-1">
-            <p className="font-bold text-slate-800">1. Sin cuentas complicadas</p>
-            <p>
-              Generamos un ID aleatorio local inmediato. No recopilamos contraseñas ni correos que consumen transmisión de fondo. Tu dispositivo es tu cuenta.
-            </p>
-          </div>
-          <div className="space-y-1">
-            <p className="font-bold text-slate-800">2. Envío en colas inteligente</p>
-            <p>
-              ¿Manejando en carretera o subiendo al bus en Mixco y te quedas sin señal? Escribe tranquilo; el software encripta y guarda en la memoria interna el mensaje (🕒), y en cuanto detecta un micro-ping, lo procesa sin que tengas que reintentar.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

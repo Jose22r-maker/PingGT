@@ -13,8 +13,9 @@ import ProfileView from "./components/ProfileView";
 import QRScannerView from "./components/QRScannerView";
 import ChatListView from "./components/ChatListView";
 import ChatConversationView from "./components/ChatConversationView";
+import SettingsView from "./components/SettingsView";
 
-import { Home, MessageSquare, QrCode, User, Radio, Leaf, Database, Sparkles } from "lucide-react";
+import { Home, MessageSquare, QrCode, User, Radio, Leaf, Database, Sparkles, Settings } from "lucide-react";
 
 export default function App() {
   // ---- 1. Identity & Contact initialization ----
@@ -85,7 +86,7 @@ export default function App() {
   });
 
   // ---- 2. Application UI Views ----
-  const [activeTab, setActiveTab] = useState<"inicio" | "chats" | "scanner" | "profile">("inicio");
+  const [activeTab, setActiveTab] = useState<"inicio" | "chats" | "scanner" | "profile" | "settings">("inicio");
   const [activeContactId, setActiveContactId] = useState<string | null>("GUAT-7777");
 
   // ---- 3. Diagnostics & Telemetry Data state ----
@@ -407,6 +408,68 @@ export default function App() {
       );
     }
 
+    // Interactive Bot reply simulator if destiny is BOT-X21
+    if (activeContactId === "BOT-X21") {
+      const isOffline = networkStats.mode === "offline";
+      const simulateLag = isOffline ? 0 : (networkStats.mode === "slow" ? 2200 : 1000);
+      
+      const triggerBotReply = () => {
+        const botAnswers = [
+          `🤖 [Bot X21]: ¡Nítido! Tu mensaje ha sido recibido con éxito. Payload de transmisión de tu último texto: ${msgBytes} Bytes.`,
+          `🤖 [Bot X21]: Probando el algoritmo de optimización de colas PingGT. Tu latencia actual del servidor es de ${networkStats.latencyMs} ms.`,
+          `🤖 [Bot X21]: ¿Sabías que PingGT es open-source, diseñado para ahorrar recursos por X21 Team Group y potenciado con la IA de Google?`,
+          `🤖 [Bot X21]: Escribe "test" o pon tu conexión en modo offline ("Desconectado") para experimentar cómo se encolan tus mensajes en la memoria de fondo.`,
+          `🤖 [Bot X21]: Tu ID local único es ${profile.id}. Comparte tu QR con tu grupo para unirte rápido sin base central rígida.`
+        ];
+        const randomAnswer = botAnswers[Math.floor(Math.random() * botAnswers.length)];
+        
+        const rcvMsg: Message = {
+          id: `bot-ans-${Math.random().toString(36).substr(2, 9)}`,
+          from: "BOT-X21",
+          to: profile.id,
+          text: randomAnswer,
+          timestamp: Date.now(),
+          status: "delivered",
+          bytesSize: estimateBytes({ text: randomAnswer })
+        };
+
+        setMessages((prev) => [...prev, rcvMsg]);
+        setContacts((prev) =>
+          prev.map((c) =>
+            c.id === "BOT-X21"
+              ? { ...c, lastMessage: randomAnswer, lastMessageTime: Date.now(), unreadCount: 0 }
+              : c
+          )
+        );
+      };
+
+      if (isOffline) {
+        setTimeout(() => {
+          const offlineAnswer = `🤖 [Bot X21 - Cola Inteligente]: He registrado localmente tu mensaje. En cuanto el medidor de ping detecte un micro-ping, liberará el payload encriptado de la cola de envío.`;
+          const rcvMsg: Message = {
+            id: `bot-ans-${Math.random().toString(36).substr(2, 9)}`,
+            from: "BOT-X21",
+            to: profile.id,
+            text: offlineAnswer,
+            timestamp: Date.now(),
+            status: "delivered",
+            bytesSize: estimateBytes({ text: offlineAnswer })
+          };
+
+          setMessages((prev) => [...prev, rcvMsg]);
+          setContacts((prev) =>
+            prev.map((c) =>
+              c.id === "BOT-X21"
+                ? { ...c, lastMessage: offlineAnswer, lastMessageTime: Date.now() }
+                : c
+            )
+          );
+        }, 1500);
+      } else {
+        setTimeout(triggerBotReply, simulateLag);
+      }
+    }
+
     // If online, dispatch immediately to sever
     if (networkStats.mode !== "offline") {
       setNetworkStats((p) => ({ ...p, totalBytesTx: p.totalBytesTx + msgBytes }));
@@ -580,6 +643,17 @@ export default function App() {
             >
               <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden min-[480px]:inline">Perfil QR</span>
             </button>
+            <button
+              id="nav-settings-tab"
+              onClick={() => setActiveTab("settings")}
+              className={`px-1.5 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-sans font-bold rounded-md sm:rounded-lg flex items-center gap-1 sm:gap-1.5 transition-all ${
+                activeTab === "settings"
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "text-emerald-200 hover:text-white hover:bg-teal-800"
+              }`}
+            >
+              <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden min-[480px]:inline">Ajustes</span>
+            </button>
           </nav>
         </div>
       </header>
@@ -692,6 +766,26 @@ export default function App() {
               profile={profile}
               onUpdateProfile={handleUpdateProfile}
               bytesSavedKb={calculatedSavings.savedPercent * 1.5}
+            />
+          </div>
+        )}
+
+        {activeTab === "settings" && (
+          <div className="max-w-2xl mx-auto">
+            <div className="mb-3 text-center">
+              <h2 className="font-sans font-bold text-base text-slate-800 flex items-center justify-center gap-1.5">
+                <Settings className="w-5 h-5 text-teal-600" /> Configuración y Ajustes
+              </h2>
+              <p className="text-xs font-sans text-slate-500 max-w-[340px] mx-auto mt-1">
+                Personaliza tu variante de idioma, parámetros de accesibilidad, soporte o revisa nuestra filosofía de red ligera.
+              </p>
+            </div>
+            
+            <SettingsView
+              profile={profile}
+              onUpdateProfileName={handleUpdateProfile}
+              networkStats={networkStats}
+              onAddContact={handleAddContact}
             />
           </div>
         )}
