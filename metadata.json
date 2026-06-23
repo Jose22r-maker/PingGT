@@ -1,0 +1,10 @@
+{
+  "name": "PingGT",
+  "description": "Mensajería ultra ligera y rápida optimizada para Guatemala. Identidad instantánea con ID/QR y funcionamiento sin conexión.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
